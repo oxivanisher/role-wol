@@ -1,2 +1,16 @@
 ---
 # tasks file for wol
+
+- name: Install ethtool
+  ansible.builtin.package:
+    name: ethtool
+    state: present
+
+- name: "Deploy systemd services for interfaces {{ item }}"
+  ansible.builtin.template:
+    src: wol.service.j2
+    dst: "/etc/systemd/system/wol-{{ item }}.service"
+    owner: root
+    group: root
+    mode: '0644'
+  loop: "{{ ansible_interfaces | difference(['lo']) }}"

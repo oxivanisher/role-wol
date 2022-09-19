@@ -1,0 +1,9 @@
+[Unit]
+Description=Enable Wake On Lan on {{ item }}
+
+[Service]
+Type=oneshot
+ExecStart = <Your filepath> --change {{ item }} wol g
+
+[Install]
+WantedBy=basic.target
