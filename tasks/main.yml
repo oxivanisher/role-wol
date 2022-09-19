@@ -6,11 +6,22 @@
     name: ethtool
     state: present
 
-- name: "Deploy wol systemd services"
+- name: "Deploy WOL systemd services"
   ansible.builtin.template:
     src: wol.service.j2
     dest: "/etc/systemd/system/wol-{{ item }}.service"
     owner: root
     group: root
     mode: '0644'
+  loop: "{{ ansible_interfaces | difference(['lo']) }}"
+
+- name: Force systemd to reload
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
+- name: "Enable and start WOL services"
+  ansible.builtin.service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
   loop: "{{ ansible_interfaces | difference(['lo']) }}"
