@@ -9,7 +9,7 @@
 - name: "Deploy wol systemd services"
   ansible.builtin.template:
     src: wol.service.j2
-    dst: "/etc/systemd/system/wol-{{ item }}.service"
+    dest: "/etc/systemd/system/wol-{{ item }}.service"
     owner: root
     group: root
     mode: '0644'
