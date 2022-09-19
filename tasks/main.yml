@@ -16,11 +16,11 @@
 
 - name: Force systemd to reload
   ansible.builtin.systemd:
-    daemon_reload: yes
+    daemon_reload: true
 
 - name: "Enable and start WOL services"
   ansible.builtin.service:
     name: "wol@{{ item }}"
     state: started
-    enabled: yes
+    enabled: true
   loop: "{{ ansible_interfaces | difference(['lo']) }}"
