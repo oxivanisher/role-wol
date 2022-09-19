@@ -1,9 +1,9 @@
 [Unit]
-Description=Enable Wake On Lan on {{ item }}
+Description=Enable Wake On Lan on %i
 
 [Service]
 Type=oneshot
-ExecStart = /usr/sbin/ethtool --change {{ item }} wol g
+ExecStart=/usr/sbin/ethtool --change %i wol g
 
 [Install]
 WantedBy=basic.target
