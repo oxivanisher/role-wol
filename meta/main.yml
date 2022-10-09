@@ -2,6 +2,7 @@
 
 galaxy_info:
   role_name: wol
+  namespace: oxivanisher
   author: Marc Urben
   description: Install and setup everything for WOL to work
   company: Thunderbluff
