@@ -23,4 +23,4 @@
     name: "wol@{{ item }}"
     state: started
     enabled: true
-  loop: "{{ ansible_interfaces | difference(['lo']) }}"
+  loop: "{{ ansible_interfaces | difference(['lo', 'docker0']) }}"
