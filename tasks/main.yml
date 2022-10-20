@@ -6,7 +6,7 @@
     name: ethtool
     state: present
 
-- name: "Deploy WOL systemd service"
+- name: Deploy WOL systemd service
   ansible.builtin.template:
     src: wol.service.j2
     dest: "/etc/systemd/system/wol@.service"
