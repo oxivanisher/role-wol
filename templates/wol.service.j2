@@ -4,6 +4,8 @@ Description=Enable Wake On Lan on %i
 [Service]
 Type=oneshot
 ExecStart=/usr/sbin/ethtool --change %i wol g
+RemainAfterExit=true
+StandardOutput=journal
 
 [Install]
-WantedBy=basic.target
+WantedBy=multi-user.target
