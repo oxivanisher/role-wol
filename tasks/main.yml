@@ -12,7 +12,7 @@
     dest: "/etc/systemd/system/wol@.service"
     owner: root
     group: root
-    mode: '0644'
+    mode: "0644"
 
 - name: Force systemd to reload
   ansible.builtin.systemd:
@@ -23,5 +23,4 @@
     name: "wol@{{ item }}"
     state: started
     enabled: true
-  ignore_errors: true
   loop: "{{ ansible_interfaces | difference(['lo']) }}"
