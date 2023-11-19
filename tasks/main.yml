@@ -18,9 +18,18 @@
   ansible.builtin.systemd:
     daemon_reload: true
 
-- name: "Enable and start WOL services"
+- name: Check WOL support for interfaces
+  ansible.builtin.shell: "ethtool {{ item }} | grep -q 'Wake-on: g'"
+  ignore_errors: "{{ ansible_check_mode }}"
+  changed_when: false
+  failed_when: false
+  loop: "{{ ansible_interfaces | difference(['lo', 'docker0']) }}"
+  register: wol_support
+
+- name: Enable and start WOL services for supported interfaces
   ansible.builtin.service:
-    name: "wol@{{ item }}"
+    name: "wol@{{ item.item }}"
     state: started
     enabled: true
-  loop: "{{ ansible_interfaces | difference(['lo', 'docker0']) }}"
+  loop: "{{ wol_support.results }}"
+  when: item.rc == 0
