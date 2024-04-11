@@ -5,6 +5,8 @@
   ansible.builtin.package:
     name: ethtool
     state: present
+  become: true
+  become_user: root
 
 - name: Deploy WOL systemd service
   ansible.builtin.template:
@@ -13,10 +15,14 @@
     owner: root
     group: root
     mode: "0644"
+  become: true
+  become_user: root
 
 - name: Force systemd to reload
   ansible.builtin.systemd:
     daemon_reload: true
+  become: true
+  become_user: root
 
 - name: Check WOL support for interfaces
   ansible.builtin.shell: "ethtool {{ item }} | grep -q 'Wake-on: g'"
@@ -25,6 +31,8 @@
   failed_when: false
   loop: "{{ ansible_interfaces | difference(['lo', 'docker0']) }}"
   register: wol_support
+  become: true
+  become_user: root
 
 - name: Enable and start WOL services for supported interfaces
   ansible.builtin.service:
@@ -33,3 +41,5 @@
     enabled: true
   loop: "{{ wol_support.results }}"
   when: item.rc == 0
+  become: true
+  become_user: root
