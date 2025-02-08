@@ -1,5 +1,6 @@
 wol
 =========
+[![Ansible Lint](https://github.com/oxivanisher/role-wol/actions/workflows/ansible-lint.yml/badge.svg)](https://github.com/oxivanisher/role-wol/actions/workflows/ansible-lint.yml)
 
 This role configures WOL on the target system so that the system can be started or woken.
 
