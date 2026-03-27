@@ -30,6 +30,8 @@
   changed_when: false
   failed_when: false
   loop: "{{ ansible_facts.interfaces | select('search', '^(eth|en)') | list }}"
+  loop_control:
+    label: "{{ item }}"
   register: wol_support
   become: true
   become_user: root
@@ -40,6 +42,8 @@
     state: started
     enabled: true
   loop: "{{ wol_support.results }}"
+  loop_control:
+    label: "{{ item.item }}"
   when: item.rc == 0
   become: true
   become_user: root
